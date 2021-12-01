@@ -29,5 +29,20 @@ namespace TicTacToe.Test
 
             Assert.Equal(boardExpected, board);
         }
+
+        [Fact]
+        public void Second_Movement_is_player2()
+        {
+            var boardExpected = new[] { string.Empty, string.Empty, string.Empty,
+                string.Empty, "X", string.Empty,
+                string.Empty, string.Empty, "O" };
+
+            var game = new Game();
+            game.Play(4);
+            game.Play(8);
+            var board = game.GetBoard();
+
+            Assert.Equal(boardExpected, board);
+        }
     }
 }
