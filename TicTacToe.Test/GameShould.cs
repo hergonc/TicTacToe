@@ -6,12 +6,14 @@ namespace TicTacToe.Test
 {
     public class GameShould
     {
+        private readonly Game game = new Game();
+
         [Fact]
         public void When_the_game_start_the_board_is_empty()
         {
             var boardExpected = new[] { "", "", "", "", "", "", "", "", "" };
 
-            var board = new Game().GetBoard();
+            var board = game.GetBoard();
 
             Assert.Equal(boardExpected, board);
         }
@@ -23,7 +25,6 @@ namespace TicTacToe.Test
                                         string.Empty, "X", string.Empty,
                                         string.Empty, string.Empty, string.Empty };
 
-            var game = new Game();
             game.Play(4);
             var board = game.GetBoard();
 
@@ -37,12 +38,27 @@ namespace TicTacToe.Test
                 string.Empty, "X", string.Empty,
                 string.Empty, string.Empty, "O" };
 
-            var game = new Game();
             game.Play(4);
             game.Play(8);
             var board = game.GetBoard();
 
             Assert.Equal(boardExpected, board);
+        }
+
+        [Fact]
+        public void Player1_wins_in_five_movements()
+        {
+            var winnerExpected = "X";
+            int[] moves = { 4, 0, 1, 6, 7};
+
+            foreach (var move in moves)
+            {
+                game.Play(move);
+                if (game.IsThereWinner())
+                    break;
+            }
+            
+            Assert.Equal(winnerExpected, game.Winner);
         }
     }
 }
