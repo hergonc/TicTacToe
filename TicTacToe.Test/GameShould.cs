@@ -58,7 +58,9 @@ namespace TicTacToe.Test
                     break;
             }
             
-            Assert.Equal(winnerExpected, game.Winner);
+            Assert.Equal(winnerExpected, game.Winner());
         }
+
+
     }
 }

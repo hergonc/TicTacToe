@@ -1,34 +1,42 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TicTacToe
 {
     public class Game
     {
-        private readonly string[] board = {
-            string.Empty, string.Empty, string.Empty,
-            string.Empty, string.Empty, string.Empty,
-            string.Empty, string.Empty, string.Empty
-        };
-        private int countMoves = 1;
-        public string Winner { get; private set; }
+        private int countMoves;
+        private readonly Board board;
+        private readonly Player player1;
+        private readonly Player player2;
 
-        public string[] GetBoard()
+        public Game()
         {
-            return board;
+            countMoves = 1;
+            board = new Board();
+            player1 = new Player(Player.Symbol.X);
+            player2 = new Player(Player.Symbol.O);
         }
 
-        public void Play(int i)
+        public void Play(int cell)
         {
-            board[i] = countMoves++ % 2 == 0 ? "O" : "X";
+            Player player = countMoves++ % 2 == 0 ? player2 : player1;
+            board.Play(cell, player);
         }
 
         public bool IsThereWinner()
         {
-            if (!string.IsNullOrEmpty(board[1]) 
-                && board[1] == board[4] 
-                && board[4] == board[7]) 
-                Winner = board[1];
-            return !string.IsNullOrEmpty(Winner);
+            return board.ValidateTicTacToe();
+        }
+
+        public string Winner()
+        {
+            return board.Winner.ToString();
+        }
+
+        public string[] GetBoard()
+        {
+            return board.GetBoard();
         }
     }
 }
