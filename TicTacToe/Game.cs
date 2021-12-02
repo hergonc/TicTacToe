@@ -31,7 +31,7 @@ namespace TicTacToe
 
         public string Winner()
         {
-            return board.Winner.ToString();
+            return board.Winner != null ? board.Winner.ToString() : "";
         }
 
         public string[] GetBoard()

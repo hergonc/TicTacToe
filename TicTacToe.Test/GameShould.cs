@@ -61,6 +61,20 @@ namespace TicTacToe.Test
             Assert.Equal(winnerExpected, game.Winner());
         }
 
+        [Fact]
+        public void Player2_wins_in_diagonal_line()
+        {
+            var winnerExpected = "O";
+            int[] moves = { 0, 4, 3, 6, 5, 2 };
 
+            foreach (var move in moves)
+            {
+                game.Play(move);
+                if (game.IsThereWinner())
+                    break;
+            }
+
+            Assert.Equal(winnerExpected, game.Winner());
+        }
     }
 }

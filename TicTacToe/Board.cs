@@ -33,6 +33,13 @@ namespace TicTacToe
                 Winner = board[1];
                 return true;
             }
+            if (!string.IsNullOrEmpty(board[6].ToString())
+                && board[6] == board[4]
+                && board[4] == board[2])
+            {
+                Winner = board[6];
+                return true;
+            }
             return false;
         }
     }
