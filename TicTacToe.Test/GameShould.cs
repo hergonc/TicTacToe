@@ -76,5 +76,13 @@ namespace TicTacToe.Test
 
             Assert.Equal(winnerExpected, game.Winner());
         }
+
+        [Fact]
+        public void Throw_exception_when_player_repeat_cell()
+        {
+            game.Play(4);
+
+            Assert.Throws<InvalidOperationException>(() => game.Play(4));
+        }
     }
 }

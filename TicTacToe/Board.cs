@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TicTacToe
@@ -29,6 +30,7 @@ namespace TicTacToe
 
         public void Play(int cell, Player player)
         {
+            if (!string.IsNullOrEmpty(board[cell].Player.ToString())) throw new InvalidOperationException();
             board[cell].Player = player;
         }
 
