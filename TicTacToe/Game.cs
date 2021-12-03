@@ -12,7 +12,7 @@ namespace TicTacToe
 
         public Game()
         {
-            countMoves = 1;
+            countMoves = 0;
             board = new Board();
             player1 = new Player(Player.Symbol.X);
             player2 = new Player(Player.Symbol.O);
@@ -20,23 +20,28 @@ namespace TicTacToe
 
         public void Play(int cell)
         {
-            Player player = countMoves++ % 2 == 0 ? player2 : player1;
-            board.Play(cell, player);
+            countMoves++;
+            board.Play(cell, ActivePlayer());
         }
 
         public bool IsThereWinner()
         {
-            return board.ValidateTicTacToe();
+            return board.ValidateTicTacToe(ActivePlayer());
         }
 
         public string Winner()
         {
-            return board.Winner != null ? board.Winner.ToString() : "";
+            return board.Winner == null ? "" : board.Winner.ToString();
         }
 
-        public string[] GetBoard()
+        public string[] Render()
         {
-            return board.GetBoard();
+            return board.Render();
+        }
+
+        private Player ActivePlayer()
+        {
+            return countMoves % 2 == 0 ? player2 : player1;
         }
     }
 }

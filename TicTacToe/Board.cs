@@ -5,42 +5,63 @@ namespace TicTacToe
 {
     public class Board
     {
-        private readonly List<Player> board = new List<Player>()
+        private readonly List<Cell> board = new List<Cell>()
         {
-            new Player(), new Player(), new Player(),
-            new Player(), new Player(), new Player(),
-            new Player(), new Player(), new Player()
+            new Cell(new Player(), new List<Cell.TypeLine>(){ Cell.TypeLine.Diagonal1, Cell.TypeLine.Horizontal1, Cell.TypeLine.Vertical1}),
+            new Cell(new Player(), new List<Cell.TypeLine>(){ Cell.TypeLine.Horizontal1, Cell.TypeLine.Vertical2}),
+            new Cell(new Player(), new List<Cell.TypeLine>(){ Cell.TypeLine.Diagonal2, Cell.TypeLine.Horizontal1, Cell.TypeLine.Vertical3}),
+
+            new Cell(new Player(), new List<Cell.TypeLine>(){ Cell.TypeLine.Horizontal2, Cell.TypeLine.Vertical1}),
+            new Cell(new Player(), new List<Cell.TypeLine>(){ Cell.TypeLine.Diagonal1, Cell.TypeLine.Diagonal2, Cell.TypeLine.Horizontal2, Cell.TypeLine.Vertical2}),
+            new Cell(new Player(), new List<Cell.TypeLine>(){ Cell.TypeLine.Horizontal2, Cell.TypeLine.Vertical3}),
+
+            new Cell(new Player(), new List<Cell.TypeLine>(){ Cell.TypeLine.Diagonal2, Cell.TypeLine.Horizontal3, Cell.TypeLine.Vertical1}),
+            new Cell(new Player(), new List<Cell.TypeLine>(){ Cell.TypeLine.Horizontal3, Cell.TypeLine.Vertical2}),
+            new Cell(new Player(), new List<Cell.TypeLine>(){ Cell.TypeLine.Diagonal1, Cell.TypeLine.Horizontal3, Cell.TypeLine.Vertical3})
         };
 
         public Player Winner { get; private set; }
 
-        public string[] GetBoard()
+        public string[] Render()
         {
-            return board.Select(p => p.ToString()).ToArray();
+            return board.Select(p => p.Player.ToString()).ToArray();
         }
 
         public void Play(int cell, Player player)
         {
-            board[cell] = player;
+            board[cell].Player = player;
         }
 
-        public bool ValidateTicTacToe()
+        public bool ValidateTicTacToe(Player player)
         {
-            if (!string.IsNullOrEmpty(board[1].ToString())
-                && board[1] == board[4]
-                && board[4] == board[7])
+            if (ValidateHorizontalLines(player) 
+                || ValidateVerticalLines(player)
+                || ValidateDiagonalLines(player))
             {
-                Winner = board[1];
-                return true;
-            }
-            if (!string.IsNullOrEmpty(board[6].ToString())
-                && board[6] == board[4]
-                && board[4] == board[2])
-            {
-                Winner = board[6];
+                Winner = player;
                 return true;
             }
             return false;
+        }
+
+        private bool ValidateDiagonalLines(Player player)
+        {
+            return board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Diagonal1)) == 3
+                   || board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Diagonal2)) == 3;
+        }
+
+        private bool ValidateVerticalLines(Player player)
+        {
+            return board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Vertical1)) == 3
+                   || board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Vertical2)) == 3
+                   || board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Vertical3)) == 3;
+        }
+
+        private bool ValidateHorizontalLines(Player player)
+        {
+            return board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Horizontal1)) == 3 
+                   || board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Horizontal2)) == 3 
+                   || board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Horizontal3)) == 3;
         }
     }
 }

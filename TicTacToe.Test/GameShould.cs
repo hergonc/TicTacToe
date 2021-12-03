@@ -13,7 +13,7 @@ namespace TicTacToe.Test
         {
             var boardExpected = new[] { "", "", "", "", "", "", "", "", "" };
 
-            var board = game.GetBoard();
+            var board = game.Render();
 
             Assert.Equal(boardExpected, board);
         }
@@ -26,7 +26,7 @@ namespace TicTacToe.Test
                                         string.Empty, string.Empty, string.Empty };
 
             game.Play(4);
-            var board = game.GetBoard();
+            var board = game.Render();
 
             Assert.Equal(boardExpected, board);
         }
@@ -40,7 +40,7 @@ namespace TicTacToe.Test
 
             game.Play(4);
             game.Play(8);
-            var board = game.GetBoard();
+            var board = game.Render();
 
             Assert.Equal(boardExpected, board);
         }
