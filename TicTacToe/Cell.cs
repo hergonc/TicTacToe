@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TicTacToe
 {
     public class Cell
     {
-        public Player Player { get; set; }
-        public List<TypeLine> TypesLine { get; }
+        public Player Player { get; private set; }
+        private List<TypeLine> TypesLine { get; }
 
         public enum TypeLine
         {
@@ -25,9 +26,20 @@ namespace TicTacToe
             this.TypesLine = typesLine;
         }
 
-        public bool CheckPlayerInTpeLine(Player player, TypeLine typeLine)
+        public bool CheckPlayerInTypeLine(Player player, TypeLine typeLine)
         {
             return this.Player == player && this.TypesLine.Contains(typeLine);
         }
+        public void SetPlayer(Player player)
+        {
+            if (!IsEmpty()) throw new InvalidOperationException();
+            this.Player = player;
+        }
+
+        private bool IsEmpty()
+        {
+            return string.IsNullOrEmpty(this.Player.ToString());
+        }
+
     }
 }

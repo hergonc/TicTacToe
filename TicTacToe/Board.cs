@@ -30,8 +30,7 @@ namespace TicTacToe
 
         public void Play(int cell, Player player)
         {
-            if (!string.IsNullOrEmpty(board[cell].Player.ToString())) throw new InvalidOperationException();
-            board[cell].Player = player;
+            board[cell].SetPlayer(player);
         }
 
         public bool ValidateTicTacToe(Player player)
@@ -48,22 +47,22 @@ namespace TicTacToe
 
         private bool ValidateDiagonalLines(Player player)
         {
-            return board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Diagonal1)) == 3
-                   || board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Diagonal2)) == 3;
+            return board.Count(c => c.CheckPlayerInTypeLine(player, Cell.TypeLine.Diagonal1)) == 3
+                   || board.Count(c => c.CheckPlayerInTypeLine(player, Cell.TypeLine.Diagonal2)) == 3;
         }
 
         private bool ValidateVerticalLines(Player player)
         {
-            return board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Vertical1)) == 3
-                   || board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Vertical2)) == 3
-                   || board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Vertical3)) == 3;
+            return board.Count(c => c.CheckPlayerInTypeLine(player, Cell.TypeLine.Vertical1)) == 3
+                   || board.Count(c => c.CheckPlayerInTypeLine(player, Cell.TypeLine.Vertical2)) == 3
+                   || board.Count(c => c.CheckPlayerInTypeLine(player, Cell.TypeLine.Vertical3)) == 3;
         }
 
         private bool ValidateHorizontalLines(Player player)
         {
-            return board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Horizontal1)) == 3 
-                   || board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Horizontal2)) == 3 
-                   || board.Count(c => c.CheckPlayerInTpeLine(player, Cell.TypeLine.Horizontal3)) == 3;
+            return board.Count(c => c.CheckPlayerInTypeLine(player, Cell.TypeLine.Horizontal1)) == 3 
+                   || board.Count(c => c.CheckPlayerInTypeLine(player, Cell.TypeLine.Horizontal2)) == 3 
+                   || board.Count(c => c.CheckPlayerInTypeLine(player, Cell.TypeLine.Horizontal3)) == 3;
         }
     }
 }
